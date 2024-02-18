@@ -69,7 +69,8 @@ namespace NetworkDirect
         {
             Provider* pProvider = &m_ProviderList.front();
             m_ProviderList.pop_front();
-            delete pProvider;
+            pProvider = NULL;
+            //delete pProvider;//会导致未定义的行为
         }
 
         if (m_hProviderChange != nullptr)
@@ -798,7 +799,8 @@ namespace NetworkDirect
             HRESULT hr = pProvider->Init(pProtocols[i].ProviderId);
             if (FAILED(hr))
             {
-                delete pProvider;
+                pProvider = NULL;
+                //delete pProvider;//会导致未定义的行为
                 continue;
             }
 
@@ -900,7 +902,8 @@ namespace NetworkDirect
             if (pProv->TryUnload() == true && pProv->IsActive() == false)
             {
                 m_ProviderList.remove(*pProv);
-                delete pProv;
+                pProv = NULL;
+                //delete pProv; //会导致未定义的行为
             }
         }
     }
